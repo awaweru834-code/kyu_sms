@@ -6,13 +6,21 @@ class Database {
     private $username;
     private $password;
     public $conn;
+    public $last_error = null;
+
+    private function getEnvVar($key, $default = null) {
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') return trim($_ENV[$key]);
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return trim($_SERVER[$key]);
+        $val = getenv($key);
+        return ($val !== false && $val !== '') ? trim($val) : $default;
+    }
 
     public function __construct() {
-        $this->host = getenv('DB_HOST') ?: "localhost";
-        $this->port = getenv('DB_PORT') ?: "3306";
-        $this->db_name = getenv('DB_NAME') ?: "kyu_sms_db";
-        $this->username = getenv('DB_USER') ?: "root";
-        $this->password = getenv('DB_PASS') !== false ? getenv('DB_PASS') : "";
+        $this->host = $this->getEnvVar('DB_HOST', 'localhost');
+        $this->port = $this->getEnvVar('DB_PORT', '3306');
+        $this->db_name = $this->getEnvVar('DB_NAME', 'kyu_sms_db');
+        $this->username = $this->getEnvVar('DB_USER', 'root');
+        $this->password = $this->getEnvVar('DB_PASS', '');
     }
 
     public function getConnection() {
@@ -23,15 +31,16 @@ class Database {
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ];
 
-            // Enable TLS/SSL for managed cloud databases (e.g., Aiven MySQL)
-            if ($this->host !== "localhost" && $this->host !== "127.0.0.1") {
-                $options[PDO::MYSQL_ATTR_SSL_CA] = '/etc/ssl/certs/ca-certificates.crt';
+            // Trigger encrypted TLS connection for Aiven without rejecting its private CA
+            if ($this->host !== 'localhost' && $this->host !== '127.0.0.1') {
+                $options[PDO::MYSQL_ATTR_SSL_CIPHER] = 'DEFAULT';
                 $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
             }
 
             $this->conn = new PDO($dsn, $this->username, $this->password, $options);
         } catch (PDOException $exception) {
-            error_log("Database connection error: " . $exception->getMessage());
+            $this->last_error = $exception->getMessage();
+            error_log("Database connection error: " . $this->last_error);
         }
         return $this->conn;
     }

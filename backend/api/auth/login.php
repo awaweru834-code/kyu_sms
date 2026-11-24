@@ -8,7 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once '../../config/database.php';
 require_once '../../models/User.php';
 require_once '../../utils/validations.php';
-
 $database = new Database();
 $db = $database->getConnection();
 
@@ -16,10 +15,11 @@ if (!$db) {
     http_response_code(500);
     echo json_encode([
         "status" => "error",
-        "message" => "Backend could not connect to the cloud database."
+        "message" => "Database connection failed: " . ($database->last_error ?? "Unknown error")
     ]);
     exit();
 }
+
 
 $data = json_decode(file_get_contents("php://input"));
 
