@@ -31,14 +31,13 @@ class Database {
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ];
 
-            // Trigger encrypted TLS connection for Aiven without rejecting its private CA
             if ($this->host !== 'localhost' && $this->host !== '127.0.0.1') {
-                $options[PDO::MYSQL_ATTR_SSL_CIPHER] = 'DEFAULT';
+                $options[PDO::MYSQL_ATTR_SSL_CA] = '/etc/ssl/certs/ca-certificates.crt';
                 $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
             }
 
             $this->conn = new PDO($dsn, $this->username, $this->password, $options);
-        } catch (PDOException $exception) {
+        } catch (Throwable $exception) {
             $this->last_error = $exception->getMessage();
             error_log("Database connection error: " . $this->last_error);
         }

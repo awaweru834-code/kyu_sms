@@ -8,53 +8,61 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once '../../config/database.php';
 require_once '../../models/User.php';
 require_once '../../utils/validations.php';
-$database = new Database();
-$db = $database->getConnection();
 
-if (!$db) {
+try {
+    $database = new Database();
+    $db = $database->getConnection();
+
+    if (!$db) {
+        http_response_code(500);
+        echo json_encode([
+            "status" => "error",
+            "message" => "DB Connection Error: " . ($database->last_error ?? "Check Render DB_* environment variables.")
+        ]);
+        exit();
+    }
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (!empty($data->username) && !empty($data->password)) {
+        $username = Validator::sanitize($data->username);
+        $user = new User($db);
+        $account = $user->findByUsername($username);
+
+        if ($account && password_verify($data->password, $account['password'])) {
+            $_SESSION['user_id'] = $account['id'];
+            $_SESSION['username'] = $account['username'];
+            $_SESSION['role'] = $account['role'];
+
+            http_response_code(200);
+            echo json_encode([
+                "status" => "success",
+                "message" => "Authentication successful.",
+                "user" => [
+                    "id" => $account['id'],
+                    "username" => $account['username'],
+                    "role" => $account['role']
+                ]
+            ]);
+        } else {
+            http_response_code(401);
+            echo json_encode([
+                "status" => "error",
+                "message" => "Invalid staff username or password."
+            ]);
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Username and password are required."
+        ]);
+    }
+} catch (Throwable $e) {
     http_response_code(500);
     echo json_encode([
         "status" => "error",
-        "message" => "Database connection failed: " . ($database->last_error ?? "Unknown error")
-    ]);
-    exit();
-}
-
-
-$data = json_decode(file_get_contents("php://input"));
-
-if (!empty($data->username) && !empty($data->password)) {
-    $username = Validator::sanitize($data->username);
-    $user = new User($db);
-    $account = $user->findByUsername($username);
-
-    if ($account && password_verify($data->password, $account['password'])) {
-        $_SESSION['user_id'] = $account['id'];
-        $_SESSION['username'] = $account['username'];
-        $_SESSION['role'] = $account['role'];
-
-        http_response_code(200);
-        echo json_encode([
-            "status" => "success",
-            "message" => "Authentication successful.",
-            "user" => [
-                "id" => $account['id'],
-                "username" => $account['username'],
-                "role" => $account['role']
-            ]
-        ]);
-    } else {
-        http_response_code(401);
-        echo json_encode([
-            "status" => "error",
-            "message" => "Invalid staff username or password."
-        ]);
-    }
-} else {
-    http_response_code(400);
-    echo json_encode([
-        "status" => "error",
-        "message" => "Username and password are required."
+        "message" => "Server Error: " . $e->getMessage()
     ]);
 }
 ?>
