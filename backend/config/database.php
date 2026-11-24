@@ -19,10 +19,19 @@ class Database {
         $this->conn = null;
         try {
             $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name . ";charset=utf8mb4";
-            $this->conn = new PDO($dsn, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            error_log("Connection error: " . $exception->getMessage());
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            ];
+
+            // Enable TLS/SSL for managed cloud databases (e.g., Aiven MySQL)
+            if ($this->host !== "localhost" && $this->host !== "127.0.0.1") {
+                $options[PDO::MYSQL_ATTR_SSL_CA] = '/etc/ssl/certs/ca-certificates.crt';
+                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            }
+
+            $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+        } catch (PDOException $exception) {
+            error_log("Database connection error: " . $exception->getMessage());
         }
         return $this->conn;
     }
