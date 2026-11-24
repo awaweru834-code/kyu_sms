@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuition & Finance — KYU Registry</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <div class="app-shell">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div>
+                <div class="sidebar-brand">
+                    <span class="mono-label">Kirinyaga University</span>
+                    <h2 style="font-size: 1.75rem; margin-top: 0.2rem;">Registry OS</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link">
+                        <span>Executive Overview</span>
+                        <span class="mono-label">01</span>
+                    </a>
+                    <a href="students.html" class="sidebar-link">
+                        <span>Scholar Directory</span>
+                        <span class="mono-label">02</span>
+                    </a>
+                    <a href="finance.html" class="sidebar-link active">
+                        <span>Tuition & Finance</span>
+                        <span class="mono-label" style="color: inherit;">03</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-user-card">
+                <span class="mono-label">Authenticated Session</span>
+                <div id="currentUserDisplay" style="font-weight: 700; font-size: 1rem; margin: 4px 0;">finance_desk</div>
+                <div id="currentRoleBadge" class="badge badge-active" style="margin-bottom: 12px;">finance</div>
+                <button id="logoutBtn" class="btn btn-outline" style="width: 100%; padding: 8px 14px; font-size: 0.8rem;">
+                    Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <header class="page-header">
+                <div>
+                    <span class="mono-label">Automated MySQL Trigger Ledger</span>
+                    <h1 class="page-title">Tuition & Fee Statements</h1>
+                </div>
+                <button id="printLedgerBtn" class="btn btn-outline no-print"> Print Official Ledger</button>
+            </header>
+
+            <!-- Financial Summary KPIs -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="mono-label">Total Tuition Billed</span>
+                    <div id="totalBilledStat" class="kpi-value" style="font-size: 2.25rem;">KES 0.00</div>
+                    <span class="kpi-footnote">Gross semester invoices generated</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="mono-label">Total Tuition Collected</span>
+                    <div id="totalPaidStat" class="kpi-value" style="font-size: 2.25rem; color: var(--status-active-text);">KES 0.00</div>
+                    <span class="kpi-footnote">Verified fee payments received</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="mono-label">Net Arrears Balance</span>
+                    <div id="totalBalanceStat" class="kpi-value" style="font-size: 2.25rem; color: var(--status-susp-text);">KES 0.00</div>
+                    <span class="kpi-footnote">Pending scholar fee balances</span>
+                </div>
+            </section>
+
+            <!-- Fee Accounts Table -->
+            <div class="surface-panel">
+                <div class="panel-toolbar">
+                    <div>
+                        <span class="mono-label">Audit Trail</span>
+                        <h3 style="font-size: 1.5rem;">Scholar Fee Accounts</h3>
+                    </div>
+                </div>
+
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reg No.</th>
+                                <th>Scholar Name</th>
+                                <th>Billed Amount</th>
+                                <th>Amount Paid</th>
+                                <th>Outstanding Balance</th>
+                                <th>Clearance Status</th>
+                                <th class="no-print">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financeTableBody">
+                            <tr><td colspan="7">Loading financial ledger...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Record Payment Modal -->
+    <div id="paymentModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <div>
+                    <span class="mono-label">Financial Receipting</span>
+                    <h2 style="font-size: 2rem;">Record Fee Payment</h2>
+                </div>
+                <button id="closePaymentModalBtn" class="btn btn-outline" style="padding: 6px 14px;">Close</button>
+            </div>
+
+            <form id="recordPaymentForm">
+                <input type="hidden" id="payment_fee_id">
+                <div class="form-group">
+                    <label class="form-label">Scholar Account</label>
+                    <input type="text" id="payment_scholar_name" class="form-control" disabled style="background: var(--bg-sand);">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Arrears Balance</label>
+                    <input type="text" id="payment_current_balance" class="form-control mono-label" disabled style="background: var(--bg-sand); color: var(--status-susp-text); font-weight: 700;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Payment Amount Received (KES)</label>
+                    <input type="number" id="payment_amount" class="form-control" placeholder="e.g., 15000" min="1" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Post Official Receipt</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Official Individual Fee Receipt Modal -->
+    <div id="receiptModal" class="modal-backdrop">
+        <div class="modal-dialog" style="max-width: 560px;">
+            <div class="receipt-voucher">
+                <div class="receipt-header">
+                    <span class="mono-label" style="color: var(--accent-forest);">Kirinyaga University • Office of the Bursar</span>
+                    <h2 style="font-size: 2.1rem; margin: 0.25rem 0;">Official Fee Receipt</h2>
+                    <div id="rcpNumber" class="mono-label" style="color: var(--text-ink); font-weight: 600;">KYU-RCP-2026-000</div>
+                </div>
+
+                <div class="receipt-meta-grid">
+                    <div>
+                        <span class="mono-label" style="display:block;">Scholar Name</span>
+                        <strong id="rcpScholarName">—</strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="mono-label" style="display:block;">Date & Time</span>
+                        <span id="rcpDate" class="mono-label" style="color: var(--text-ink);">—</span>
+                    </div>
+                    <div>
+                        <span class="mono-label" style="display:block;">Registration No.</span>
+                        <span id="rcpRegNo" class="mono-label" style="color: var(--text-ink);">—</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="mono-label" style="display:block;">Academic School</span>
+                        <span id="rcpDepartment">—</span>
+                    </div>
+                </div>
+
+                <div class="receipt-line-item">
+                    <span style="color: var(--text-muted);">Total Semester Tuition Billed</span>
+                    <span id="rcpTotalBilled" class="mono-label" style="color: var(--text-ink);">KES 0.00</span>
+                </div>
+                <div class="receipt-line-item" id="rcpCurrentTxRow">
+                    <span style="color: var(--text-muted);">Current Transaction Receipted</span>
+                    <span id="rcpAmountNow" class="mono-label" style="color: var(--status-active-text); font-weight: 700;">KES 0.00</span>
+                </div>
+                <div class="receipt-line-item">
+                    <span style="color: var(--text-muted);">Cumulative Tuition Paid to Date</span>
+                    <span id="rcpTotalPaid" class="mono-label" style="color: var(--status-active-text);">KES 0.00</span>
+                </div>
+
+                <div class="receipt-total-box">
+                    <div>
+                        <span class="mono-label" style="display:block;">Remaining Balance</span>
+                        <span style="font-size: 0.78rem; color: var(--text-muted);">Authorized by: <strong id="rcpIssuedBy">finance_desk</strong></span>
+                    </div>
+                    <div id="rcpBalance" style="font-family: var(--font-serif); font-size: 1.85rem; color: var(--text-ink);">
+                        KES 0.00
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <span class="receipt-stamp">✓ Verified Electronic Voucher</span>
+                </div>
+            </div>
+
+            <div class="receipt-actions" style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+                <button type="button" id="printReceiptBtn" class="btn btn-primary" style="flex: 1;">
+                     Print / Save PDF Receipt
+                </button>
+                <button type="button" id="closeReceiptModalBtn" class="btn btn-outline">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

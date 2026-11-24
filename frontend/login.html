@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — KYU Registry</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+    <div class="auth-split-wrapper">
+        <!-- Left Architectural Visual Panel -->
+        <div class="auth-visual-panel">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1400&auto=format&fit=crop" 
+                 alt="Warm Sunlight Architectural Hall">
+            
+            <div class="auth-visual-content">
+                <a href="index.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: #fff;">
+                    ← Return to Monograph
+                </a>
+            </div>
+
+            <div class="auth-visual-content" style="max-width: 480px;">
+                <span class="mono-label" style="color: var(--bg-oat);">Institutional Access Control</span>
+                <h2 style="color: #fff; font-size: 2.75rem; margin: 0.5rem 0 1rem;">
+                    Centralized Academic & Financial Governance.
+                </h2>
+                <p style="font-size: 0.95rem; opacity: 0.85;">
+                    Authorized personnel only. All mutations to scholar records and tuition ledgers are governed by role-based session policies.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Authentication Form Panel -->
+        <div class="auth-form-panel">
+            <div class="auth-card">
+                <span class="mono-label">Administrator Authentication</span>
+                <h1 style="font-size: 2.75rem; margin: 0.4rem 0 0.5rem;">Welcome back.</h1>
+                <p style="color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.95rem;">
+                    Select a role preset below for instant demonstration or enter your credentials.
+                </p>
+                
+                <!-- Quick-Fill Presentation Pills -->
+                <div class="demo-pill-group">
+                   <button type="button" class="demo-pill" data-fill-user="admin_chief" data-fill-pass="admin123">
+                       Super Admin
+                   </button>
+                   <button type="button" class="demo-pill" data-fill-user="registrar_desk" data-fill-pass="admin123">
+                       Academic Registrar
+                    </button>
+                    <button type="button" class="demo-pill" data-fill-user="finance_desk" data-fill-pass="admin123">
+                        Finance Officer
+                    </button>
+                </div>
+                
+
+                <div id="loginError" style="display:none; background: var(--status-susp-bg); color: var(--status-susp-text); padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.88rem; font-weight: 500;"></div>
+
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label class="form-label" for="username">Institutional Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="e.g., admin_chief" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Security Passkey</label>
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                        Enter Registry Portal
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

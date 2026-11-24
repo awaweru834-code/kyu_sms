@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Warm Editorial Palette */
+    --bg-ivory: #FAF7F2;
+    --bg-sand: #F2ECE1;
+    --bg-oat: #E8DFD1;
+    --bg-surface: #FFFFFF;
+    --bg-glass: rgba(250, 247, 242, 0.85);
+    
+    /* Ink & Text Tones */
+    --text-ink: #161514;
+    --text-charcoal: #3A3734;
+    --text-muted: #6E6860;
+    --text-subtle: #9A938A;
+
+    /* Bespoke Accents */
+    --accent-forest: #1B3B2B;
+    --accent-forest-hover: #254F3A;
+    --accent-terracotta: #C2593F;
+    --accent-gold: #B8860B;
+    
+    /* Semantic Status Colors */
+    --status-active-bg: #E6F0EA;
+    --status-active-text: #1B4D3E;
+    --status-grad-bg: #EAE8F6;
+    --status-grad-text: #3B3273;
+    --status-susp-bg: #F9E8E4;
+    --status-susp-text: #9E3321;
+
+    /* Borders, Radii & Shadows */
+    --border-hairline: rgba(22, 21, 20, 0.08);
+    --border-strong: rgba(22, 21, 20, 0.16);
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 26px;
+    --radius-pill: 9999px;
+    --shadow-soft: 0 12px 32px -8px rgba(22, 21, 20, 0.05), 0 2px 6px -1px rgba(22, 21, 20, 0.03);
+    --shadow-elevated: 0 24px 48px -12px rgba(22, 21, 20, 0.10);
+
+    /* Typography */
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Motion */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background-color: var(--bg-ivory);
+    color: var(--text-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Editorial Typography */
+h1, h2, h3, .serif-heading {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--text-ink);
+}
+
+.italic-accent {
+    font-style: italic;
+    color: var(--accent-terracotta);
+}
+
+.mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+/* Buttons & Interactive Elements */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.35s var(--ease-out-expo);
+}
+
+.btn-primary {
+    background-color: var(--accent-forest);
+    color: var(--bg-ivory);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-forest-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -6px rgba(27, 59, 43, 0.35);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-ink);
+    border-color: var(--border-strong);
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-sand);
+    transform: translateY(-2px);
+}
+
+.btn-terracotta {
+    background-color: var(--accent-terracotta);
+    color: #fff;
+}
+
+.btn-terracotta:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-charcoal);
+    margin-bottom: 0.45rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 13px 16px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--text-ink);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-forest);
+    box-shadow: 0 0 0 4px rgba(27, 59, 43, 0.08);
+}
+
+/* Status Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+.badge-active { background: var(--status-active-bg); color: var(--status-active-text); }
+.badge-graduated { background: var(--status-grad-bg); color: var(--status-grad-text); }
+.badge-suspended { background: var(--status-susp-bg); color: var(--status-susp-text); }
+
+/* Scroll Reveal Animation Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

@@ -1,0 +1,304 @@
+/* Sticky Editorial Navigation */
+.editorial-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-hairline);
+    padding: 1.1rem 4vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-lockup {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-ink);
+}
+
+.brand-title {
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+}
+
+.nav-links a:not(.btn) {
+    text-decoration: none;
+    color: var(--text-charcoal);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:not(.btn):hover {
+    color: var(--accent-terracotta);
+}
+
+/* Hero Section */
+.hero-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5.5rem 4vw 4rem;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    background: var(--bg-sand);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    margin-bottom: 1.75rem;
+}
+
+.hero-headline {
+    font-size: clamp(3.2rem, 5.6vw, 5.4rem);
+    margin-bottom: 1.5rem;
+}
+
+.hero-lead {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Hero Visual Composition */
+.hero-visual-stack {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+}
+
+.hero-img-primary {
+    grid-column: 2 / 13;
+    height: 540px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-elevated);
+}
+
+.hero-floating-card {
+    grid-column: 1 / 8;
+    margin-top: -130px;
+    background: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-hairline);
+    box-shadow: var(--shadow-elevated);
+    z-index: 2;
+}
+
+/* Editorial Problem & Justification Spread */
+.editorial-spread {
+    max-width: 1400px;
+    margin: 4rem auto;
+    padding: 4.5rem 4vw;
+    background-color: var(--bg-sand);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.spread-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.spread-title {
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    margin: 0.75rem 0 1.25rem;
+}
+
+.spread-body {
+    color: var(--text-charcoal);
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+/* Bento Grid Section */
+.bento-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 4vw;
+}
+
+.section-header {
+    max-width: 680px;
+    margin-bottom: 3.5rem;
+}
+
+.section-header h2 {
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    margin-top: 0.5rem;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+}
+
+.bento-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.bento-span-7 { grid-column: span 7; }
+.bento-span-5 { grid-column: span 5; }
+.bento-span-4 { grid-column: span 4; }
+.bento-span-8 { grid-column: span 8; }
+
+.bento-card h3 {
+    font-size: 2rem;
+    margin: 0.75rem 0;
+}
+
+.bento-card p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
+
+.bento-image-banner {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-top: 1.75rem;
+}
+
+/* Split-Screen Login Layout */
+.auth-split-wrapper {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    padding: 1.25rem;
+    gap: 1.25rem;
+}
+
+.auth-visual-panel {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #161514;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    color: var(--bg-ivory);
+}
+
+.auth-visual-panel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    z-index: 0;
+}
+
+.auth-visual-content {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-form-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 4vw;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+}
+
+.demo-pill-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.demo-pill {
+    background: var(--bg-sand);
+    border: 1px solid var(--border-strong);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.demo-pill:hover {
+    background: var(--bg-oat);
+}
+
+/* Footer */
+.editorial-footer {
+    border-top: 1px solid var(--border-hairline);
+    padding: 3rem 4vw;
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+    .hero-section, .editorial-spread, .auth-split-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .bento-span-7, .bento-span-5, .bento-span-4, .bento-span-8 {
+        grid-column: span 12;
+    }
+    .auth-visual-panel {
+        min-height: 320px;
+    }
+}

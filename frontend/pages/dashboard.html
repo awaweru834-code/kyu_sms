@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Overview — KYU Registry</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <div class="app-shell">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div>
+                <div class="sidebar-brand">
+                    <span class="mono-label">Kirinyaga University</span>
+                    <h2 style="font-size: 1.75rem; margin-top: 0.2rem;">Registry OS</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link active">
+                        <span>Executive Overview</span>
+                        <span class="mono-label" style="color: inherit;">01</span>
+                    </a>
+                    <a href="students.html" class="sidebar-link">
+                        <span>Scholar Directory</span>
+                        <span class="mono-label">02</span>
+                    </a>
+                    <a href="finance.html" class="sidebar-link">
+                        <span>Tuition & Finance</span>
+                        <span class="mono-label">03</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-user-card">
+                <span class="mono-label">Authenticated Session</span>
+                <div id="currentUserDisplay" style="font-weight: 700; font-size: 1rem; margin: 4px 0;">admin_chief</div>
+                <div id="currentRoleBadge" class="badge badge-active" style="margin-bottom: 12px;">super admin</div>
+                <button id="logoutBtn" class="btn btn-outline" style="width: 100%; padding: 8px 14px; font-size: 0.8rem;">
+                    Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <header class="page-header">
+                <div>
+                    <span class="mono-label">Report 01 / Real-Time SQL View Telemetry</span>
+                    <h1 class="page-title">Executive Overview</h1>
+                </div>
+                <a href="students.html" class="btn btn-primary">+ Admit New Scholar</a>
+            </header>
+
+            <!-- KPI Grid -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="mono-label">Active Scholars</span>
+                    <div id="statActiveStudents" class="kpi-value">0</div>
+                    <span class="kpi-footnote">Currently enrolled in good standing</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="mono-label">Accredited Courses</span>
+                    <div id="statTotalCourses" class="kpi-value">0</div>
+                    <span class="kpi-footnote">Across SCIT & School of Business</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="mono-label">Outstanding Tuition Balance</span>
+                    <div id="statOutstandingFees" class="kpi-value" style="font-size: 2.35rem;">KES 0.00</div>
+                    <span class="kpi-footnote">Computed via MySQL aggregate view</span>
+                </div>
+            </section>
+
+            <!-- Report 02 & Report 03 Split -->
+            <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.5rem;">
+                <!-- Recent Admissions Table -->
+                <div class="surface-panel">
+                    <div class="panel-toolbar">
+                        <div>
+                            <span class="mono-label">Report 02 / Registry Feed</span>
+                            <h3 style="font-size: 1.5rem;">Recent Scholar Admissions</h3>
+                        </div>
+                        <a href="students.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;">View Full Directory</a>
+                    </div>
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Reg No.</th>
+                                    <th>Scholar Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Admitted</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentStudentsBody">
+                                <tr><td colspan="5">Loading telemetry...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Departmental Distribution -->
+                <div class="surface-panel" style="padding: 1.75rem;">
+                    <span class="mono-label">Report 03 / Cohort Breakdown</span>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.25rem;">Enrollment by School</h3>
+                    <div id="deptBreakdownList">
+                        <p style="color: var(--text-muted);">Calculating distribution...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

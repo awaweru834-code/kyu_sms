@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholar Directory — KYU Registry</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <div class="app-shell">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div>
+                <div class="sidebar-brand">
+                    <span class="mono-label">Kirinyaga University</span>
+                    <h2 style="font-size: 1.75rem; margin-top: 0.2rem;">Registry OS</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link">
+                        <span>Executive Overview</span>
+                        <span class="mono-label">01</span>
+                    </a>
+                    <a href="students.html" class="sidebar-link active">
+                        <span>Scholar Directory</span>
+                        <span class="mono-label" style="color: inherit;">02</span>
+                    </a>
+                    <a href="finance.html" class="sidebar-link">
+                        <span>Tuition & Finance</span>
+                        <span class="mono-label">03</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-user-card">
+                <span class="mono-label">Authenticated Session</span>
+                <div id="currentUserDisplay" style="font-weight: 700; font-size: 1rem; margin: 4px 0;">admin_chief</div>
+                <div id="currentRoleBadge" class="badge badge-active" style="margin-bottom: 12px;">super admin</div>
+                <button id="logoutBtn" class="btn btn-outline" style="width: 100%; padding: 8px 14px; font-size: 0.8rem;">
+                    Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <header class="page-header">
+                <div>
+                    <span class="mono-label">Directory & Lifecycle CRUD</span>
+                    <h1 class="page-title">Scholar Registry</h1>
+                </div>
+                <button id="openAdmitModalBtn" class="btn btn-primary">+ Admit New Scholar</button>
+            </header>
+
+            <div class="surface-panel">
+                <div class="panel-toolbar">
+                    <input type="text" id="studentSearchInput" class="form-control" 
+                           placeholder="Search by name, reg number, or email..." 
+                           style="max-width: 360px;">
+                    
+                    <div class="toolbar-controls">
+                        <span class="mono-label">Filter Status:</span>
+                        <select id="statusFilterSelect" class="form-control" style="width: auto; padding: 10px 14px;">
+                            <option value="all">All Scholars</option>
+                            <option value="active">Active</option>
+                            <option value="graduated">Graduated</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Registration No.</th>
+                                <th>Scholar Profile</th>
+                                <th>Academic School</th>
+                                <th>Standing</th>
+                                <th>Admission Date</th>
+                                <th>Governance Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <tr><td colspan="6">Loading scholar records...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admit New Scholar Modal -->
+    <div id="admitStudentModal" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <div>
+                    <span class="mono-label">New Enrollment</span>
+                    <h2 style="font-size: 2rem;">Admit Scholar</h2>
+                </div>
+                <button id="closeAdmitModalBtn" class="btn btn-outline" style="padding: 6px 14px;">Close</button>
+            </div>
+
+            <form id="admitStudentForm">
+                <div class="form-group">
+                    <label class="form-label">Registration Number</label>
+                    <input type="text" id="reg_number" class="form-control" placeholder="e.g., SCIT/0412/2026" required>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="first_name" class="form-control" placeholder="Wanjiku" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="last_name" class="form-control" placeholder="Kamau" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">University Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="wanjiku.kamau@students.kyu.ac.ke" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Academic Department</label>
+                    <select id="department_id" class="form-control" required>
+                        <option value="1">School of Computing & IT (SCIT)</option>
+                        <option value="2">School of Business & Economics (SBA)</option>
+                    </select>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                    * Admitting a scholar automatically triggers a KES 50,000.00 semester fee invoice in the Finance Ledger.
+                </p>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Admission</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>
